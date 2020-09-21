@@ -1,0 +1,33 @@
+21-Sep-20
+---------
+
+What is Angular?
+- UI Framework
+- A front end development tool which provide us to create web application in component based
+- JavaScript framework for building web apps
+- JS Library - Framework
+- It provides many feature like directive, component , services  ,forms ,pipe
+- Used to create SPAs
+- Open source and used in all web component
+- Portable
+- Its a javascript framework use to create independent client side web application
+- It is faster then server side request as it not load already loaded script js again and again
+- TypeScript based framework
+- Supports Micro-frontends
+- MVC Pattern
+
+Why Angular?
+- Dynamic nature on http page with live server
+- For create single page application
+- It have powerful feature and faster than other web application
+- When we create traditional application it will request all links again and load all again  but angular request for needed one only 
+- Two way binding
+- It support typescript higher version of javascript i.e. ES6
+- due one to one peer and broudcast is hard
+- It permit to build complex, customized, modern, responsive and user-friendly
+- jquery is library and angular is framework
+- yes but loading time is less compare to it
+- ajax handling
+
+
+- The end-user only knows the url - https://www.amazon.in, but the browser issues multiple requests to the server internally.

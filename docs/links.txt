@@ -1,5 +1,11 @@
 Links
 -----
+- Angular 10 Release
+  - https://blog.angular.io/version-10-of-angular-now-available-78960babd41
+  
+- What's New in Angular 10
+  - https://medium.com/better-programming/angular-10-new-features-dbc779061dc8
+
 - Angular coding style guide
   - https://angular.io/guide/styleguide
   
