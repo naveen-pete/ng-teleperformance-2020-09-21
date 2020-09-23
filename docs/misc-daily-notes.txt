@@ -130,3 +130,23 @@ Dev Env
 -----------------------------------------------------------
 23-Sep-20
 ---------
+
+1. class
+2. function
+3. variables - scalar, array, object
+
+Amazon
+  - AppModule
+  - ProductModule - Components, Directives, Pipes, Services
+  - CustomerModule
+  - OrderModule
+  - UserModule
+  - ShoppingCart
+
+Component
+  - UI Code - html
+  - Stylesheets - css
+  - Data - TS - class - property - categories: [] array of category objects
+  - Behavior - TS - class - method - searchProducts(searchText)
+  
+  - reusability
