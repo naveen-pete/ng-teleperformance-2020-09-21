@@ -1,4 +1,36 @@
 <h4>Product List</h4>
 <div>This component displays a list of products</div>
 
-<button class="btn btn-primary">Save</button>
+<hr>
+<!-- Interpolation -->
+<div>
+  Name: {{ productName }}
+</div>
+<div>
+  Price: {{ productPrice }}
+</div>
+
+<hr>
+
+<!-- Property binding - [] -->
+<div>
+  Name: <input type="text" [(ngModel)]="productName" class="form-control">
+</div>
+
+<!-- Event binding - () -->
+<hr>
+<div>
+  <button class="btn btn-primary" (click)="onSubmit()">Save</button>
+</div>
+
+<hr>
+
+<div>
+  <input type="text" placeholder="enter search text..." (keyup)="onSearch($event)">
+</div>
+
+<hr>
+
+<div>
+  Hurry up! {{ productName }} has 20% discount!
+</div>
