@@ -8,9 +8,6 @@ import { ProductModel } from './product.model';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  showMessage: boolean = false;
-  product: ProductModel = new ProductModel();
-
   products: ProductModel[] = [
     {
       id: 1,
@@ -39,33 +36,8 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onSubmit() {
-    this.product.id = Date.now();
-
-    console.log("New product details submitted.");
-
-    this.products.unshift(this.product);
-    this.product = new ProductModel();
-
-    console.log('onSubmit() this:', this);
-    // var obj = this;
-
-    this.showMessage = true;
-
-    // Anonymous function syntax - ES5
-    // setTimeout(function () {
-    //   console.log('callback() this:', this);
-    //   obj.showMessage = false;
-    //   console.log('showMessage property reset to false..');
-    // }, 5000);
-
-    // Arrow function syntax - ES6
-    setTimeout(() => {
-      console.log('callback() this:', this);
-      this.showMessage = false;
-      console.log('showMessage property reset to false..');
-    }, 5000);
-
+  onProductCreated(newProduct: ProductModel) {
+    this.products.unshift(newProduct);
   }
 
 }

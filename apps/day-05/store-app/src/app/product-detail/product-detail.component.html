@@ -1,0 +1,21 @@
+<div class="card bg-light mb-2" style="max-width: 30rem;">
+  <h5 class="card-header">{{ product.name | uppercase }}</h5>
+  <div class="card-body">
+    <p [ngStyle]="{ color: product.isAvailable ? 'blue' : 'red' }" class="card-text">{{ product.description }}</p>
+    <p class="card-text"><strong class="mr-2">Price:</strong>
+      <em>{{ product.price | currency : 'INR' : 'code' }}</em>
+    </p>
+    <p class="card-text"><strong class="mr-2">Available?</strong>
+      <em class="badge"
+        [ngClass]="{ 'badge-success': product.isAvailable, 'badge-warning': !product.isAvailable }">{{ product.isAvailable ? 'Yes' : 'No' }}</em>
+    </p>
+  </div>
+  <div class="card-footer text-right">
+    <button type="button" class="btn btn-outline-primary btn-sm mr-2">
+      Edit
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm">
+      Delete
+    </button>
+  </div>
+</div>
