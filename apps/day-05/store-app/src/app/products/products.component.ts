@@ -8,13 +8,8 @@ import { ProductModel } from './product.model';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  // product: ProductModel = {
-  //   id: 1,
-  //   name: 'iPhone 11',
-  //   price: 45000,
-  //   description: 'Smart phone from Apple',
-  //   isAvailable: true
-  // };
+  showMessage: boolean = false;
+  product: ProductModel = new ProductModel();
 
   products: ProductModel[] = [
     {
@@ -40,17 +35,37 @@ export class ProductsComponent implements OnInit {
     }
   ];
 
-  constructor() {
-    // this.product.id = 10;
-    // this.product.name = ''
-  }
+  constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
-  applyStyle(isAvailable) {
-    return { color: isAvailable ? 'blue' : 'red' };
-  }
+  onSubmit() {
+    this.product.id = Date.now();
 
+    console.log("New product details submitted.");
+
+    this.products.unshift(this.product);
+    this.product = new ProductModel();
+
+    console.log('onSubmit() this:', this);
+    // var obj = this;
+
+    this.showMessage = true;
+
+    // Anonymous function syntax - ES5
+    // setTimeout(function () {
+    //   console.log('callback() this:', this);
+    //   obj.showMessage = false;
+    //   console.log('showMessage property reset to false..');
+    // }, 5000);
+
+    // Arrow function syntax - ES6
+    setTimeout(() => {
+      console.log('callback() this:', this);
+      this.showMessage = false;
+      console.log('showMessage property reset to false..');
+    }, 5000);
+
+  }
 
 }
