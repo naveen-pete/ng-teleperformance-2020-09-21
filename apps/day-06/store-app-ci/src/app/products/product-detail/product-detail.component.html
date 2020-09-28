@@ -3,7 +3,7 @@
   <div class="card-body">
     <p [ngStyle]="{ color: product.isAvailable ? 'blue' : 'red' }" class="card-text">{{ product.description }}</p>
     <p class="card-text"><strong class="mr-2">Price:</strong>
-      <em>{{ product.price | currency : 'INR' : 'code' }}</em>
+      <em>{{ product.price | currency : 'INR' }}</em>
     </p>
     <p class="card-text"><strong class="mr-2">Available?</strong>
       <em class="badge"

@@ -36,7 +36,11 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onProductCreated(newProduct: ProductModel) {
+  onCreateProduct(newProduct: ProductModel) {
+    newProduct.id = Date.now();
+
+    console.log(newProduct);
+
     this.products.unshift(newProduct);
   }
 
