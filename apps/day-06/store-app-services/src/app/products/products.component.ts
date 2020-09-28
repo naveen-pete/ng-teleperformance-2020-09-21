@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ProductModel } from './product.model';
+import { ProductsService } from './products.service';
+
+// tight coupling
 
 @Component({
   selector: 'app-products',
@@ -9,38 +12,20 @@ import { ProductModel } from './product.model';
 })
 export class ProductsComponent implements OnInit {
   productToEdit: ProductModel;
+  service: ProductsService;
 
-  products: ProductModel[] = [
-    {
-      id: 1,
-      name: 'iPhone X',
-      description: 'A mobile phone from Apple',
-      isAvailable: true,
-      price: 60000
-    },
-    {
-      id: 2,
-      name: 'Samsung Galaxy Note 10',
-      description: 'A mobile phone from Samsung',
-      isAvailable: true,
-      price: 80000
-    },
-    {
-      id: 3,
-      name: 'Google Pixel 3',
-      description: 'A mobile phone from Google',
-      isAvailable: false,
-      price: 50000
-    }
-  ];
+  products: ProductModel[] = [];
 
-  constructor() { }
+  constructor(service: ProductsService) {
+    this.service = service;
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.products = this.service.getProducts();
+  }
 
   onCreateProduct(newProduct: ProductModel) {
     newProduct.id = Date.now();
-
     this.products.unshift(newProduct);
   }
 
