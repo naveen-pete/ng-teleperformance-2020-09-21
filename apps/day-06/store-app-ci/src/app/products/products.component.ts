@@ -73,11 +73,13 @@ export class ProductsComponent implements OnInit {
 
   onDeleteProduct(id: number) {
     // solution #1
-    const index = this.products.findIndex(p => p.id === id);
-    this.products.splice(index, 1);
+    // const index = this.products.findIndex(p => p.id === id);
+    // if (index >= 0) {
+    //   this.products.splice(index, 1);
+    // }
 
     // solution #2
-    // this.products = this.products.filter(p => p.id !== id);
+    this.products = this.products.filter(p => p.id !== id);
   }
 
 }

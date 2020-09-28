@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 import { ProductModel } from '../product.model';
 
@@ -7,7 +7,7 @@ import { ProductModel } from '../product.model';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent implements OnInit, OnDestroy {
   @Input() product: ProductModel = new ProductModel();
 
   @Output() deleteProduct = new EventEmitter<number>();
@@ -25,5 +25,10 @@ export class ProductDetailComponent implements OnInit {
 
   onEdit() {
     this.editProduct.emit(this.product.id);
+  }
+
+  ngOnDestroy() {
+    console.log('ProductDetailComponent.ngOnDestroy() invoked.');
+    console.log('the code to release the resource goes here.');
   }
 }

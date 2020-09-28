@@ -36,7 +36,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
       ...this.product,
       price: isNaN(price) ? 0 : price,
       isAvailable: this.product.isAvailable || false
-    }
+    };
 
     if (this.createNew) {
       this.createProduct.emit(product);
