@@ -8,6 +8,8 @@ import { ProductModel } from './product.model';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
+  productToEdit: ProductModel;
+
   products: ProductModel[] = [
     {
       id: 1,
@@ -40,6 +42,33 @@ export class ProductsComponent implements OnInit {
     newProduct.id = Date.now();
 
     this.products.unshift(newProduct);
+  }
+
+  onUpdateProduct(product: ProductModel) {
+    // solution #1
+    this.products = this.products.map(p => p.id === product.id ? product : p);
+
+    // solution #2
+    // const productToUpdate = this.products.find(p => p.id === product.id);
+    // if (productToUpdate) {
+    //   productToUpdate.name = product.name;
+    //   productToUpdate.description = product.description;
+    //   productToUpdate.price = product.price;
+    //   productToUpdate.isAvailable = product.isAvailable;
+    // }
+
+    this.productToEdit = null;
+  }
+
+  onCancelEditProduct() {
+    this.productToEdit = null;
+  }
+
+  onEditProduct(id: number) {
+    const product = this.products.find(p => p.id === id);
+    if (product) {
+      this.productToEdit = { ...product };
+    }
   }
 
   onDeleteProduct(id: number) {

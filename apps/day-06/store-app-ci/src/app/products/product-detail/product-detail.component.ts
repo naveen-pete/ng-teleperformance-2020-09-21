@@ -11,7 +11,7 @@ export class ProductDetailComponent implements OnInit {
   @Input() product: ProductModel = new ProductModel();
 
   @Output() deleteProduct = new EventEmitter<number>();
-
+  @Output() editProduct = new EventEmitter<number>();
 
   constructor() { }
 
@@ -21,5 +21,9 @@ export class ProductDetailComponent implements OnInit {
     if (window.confirm('Are you sure?')) {
       this.deleteProduct.emit(this.product.id);
     }
+  }
+
+  onEdit() {
+    this.editProduct.emit(this.product.id);
   }
 }

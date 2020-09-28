@@ -26,11 +26,17 @@
         <label for="isAvailable" class="form-check-label">Available?</label>
       </div>
 
-      <button type="button" class="btn btn-primary" (click)="onCreate()">Create</button>
+      <div *ngIf="createNew">
+        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">Create</button>
+      </div>
+      <div *ngIf="!createNew">
+        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">Update</button>
+        <button type="button" class="btn btn-sm btn-warning" (click)="onCancel()">Cancel</button>
+      </div>
     </form>
   </div>
 </div>
 
 <div class="alert alert-success mt-3" *ngIf="showMessage">
-  New product saved successfully!
+  Product saved successfully!
 </div>
