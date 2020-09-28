@@ -39,9 +39,16 @@ export class ProductsComponent implements OnInit {
   onCreateProduct(newProduct: ProductModel) {
     newProduct.id = Date.now();
 
-    console.log(newProduct);
-
     this.products.unshift(newProduct);
+  }
+
+  onDeleteProduct(id: number) {
+    // solution #1
+    const index = this.products.findIndex(p => p.id === id);
+    this.products.splice(index, 1);
+
+    // solution #2
+    // this.products = this.products.filter(p => p.id !== id);
   }
 
 }
