@@ -3,14 +3,12 @@
   <div class="row">
 
     <div class="col-4">
-      <app-product-form [product]="productToEdit" (createProduct)="onCreateProduct($event)"
-        (updateProduct)="onUpdateProduct($event)" (cancelEditProduct)="onCancelEditProduct()"></app-product-form>
+      <app-product-form [product]="productToEdit" (cancelEditProduct)="onCancelEditProduct()"></app-product-form>
     </div>
 
     <div class="col-8">
       <h4>Products</h4>
-      <app-product-detail [product]="p" *ngFor="let p of products" (deleteProduct)="onDeleteProduct($event)"
-        (editProduct)="onEditProduct($event)">
+      <app-product-detail [product]="p" *ngFor="let p of products" (editProduct)="onEditProduct($event)">
       </app-product-detail>
     </div>
 

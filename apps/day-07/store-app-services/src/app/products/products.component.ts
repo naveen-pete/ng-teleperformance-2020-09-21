@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { ProductModel } from './product.model';
 import { ProductsService } from './products.service';
@@ -8,39 +9,20 @@ import { ProductsService } from './products.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   productToEdit: ProductModel;
-  service: ProductsService;
+  subRefreshProducts: Subscription;
 
   products: ProductModel[] = [];
 
-  constructor(service: ProductsService) {
-    this.service = service;
-  }
+  constructor(private service: ProductsService) { }
 
   ngOnInit(): void {
+    this.subRefreshProducts = this.service.refreshProducts.subscribe((products: ProductModel[]) => {
+      this.products = products;
+    })
+
     this.products = this.service.getAllProducts();
-  }
-
-  onCreateProduct(newProduct: ProductModel) {
-    newProduct.id = Date.now();
-    this.products.unshift(newProduct);
-  }
-
-  onUpdateProduct(product: ProductModel) {
-    // solution #1
-    this.products = this.products.map(p => p.id === product.id ? product : p);
-
-    // solution #2
-    // const productToUpdate = this.products.find(p => p.id === product.id);
-    // if (productToUpdate) {
-    //   productToUpdate.name = product.name;
-    //   productToUpdate.description = product.description;
-    //   productToUpdate.price = product.price;
-    //   productToUpdate.isAvailable = product.isAvailable;
-    // }
-
-    this.productToEdit = null;
   }
 
   onCancelEditProduct() {
@@ -48,19 +30,13 @@ export class ProductsComponent implements OnInit {
   }
 
   onEditProduct(id: number) {
-    const product = this.products.find(p => p.id === id);
-    if (product) {
-      this.productToEdit = { ...product };
-    }
+    this.productToEdit = this.service.getProduct(id);
   }
 
-  onDeleteProduct(id: number) {
-    // solution #1
-    const index = this.products.findIndex(p => p.id === id);
-    this.products.splice(index, 1);
-
-    // solution #2
-    // this.products = this.products.filter(p => p.id !== id);
+  ngOnDestroy() {
+    if (this.subRefreshProducts) {
+      this.subRefreshProducts.unsubscribe();
+    }
   }
 
 }

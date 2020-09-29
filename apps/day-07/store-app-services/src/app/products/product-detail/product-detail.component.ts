@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ProductModel } from '../product.model';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -10,16 +11,15 @@ import { ProductModel } from '../product.model';
 export class ProductDetailComponent implements OnInit {
   @Input() product: ProductModel = new ProductModel();
 
-  @Output() deleteProduct = new EventEmitter<number>();
   @Output() editProduct = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private service: ProductsService) { }
 
   ngOnInit(): void { }
 
   onDelete() {
     if (window.confirm('Are you sure?')) {
-      this.deleteProduct.emit(this.product.id);
+      this.service.deleteProduct(this.product.id);
     }
   }
 

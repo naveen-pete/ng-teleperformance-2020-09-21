@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { ProductModel } from './product.model';
+import { LoggerService } from '../common/logger.service';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductsService {
+  refreshProducts = new Subject<ProductModel[]>();
 
   private products: ProductModel[] = [
     {
@@ -32,10 +34,11 @@ export class ProductsService {
     }
   ];
 
-  constructor() { }
+  constructor(private logger: LoggerService) { }
 
   // Called from ProductsComponent
   getAllProducts(): ProductModel[] {
+    this.logger.log('Get all products invoked.');
     return [...this.products];
   }
 
@@ -55,15 +58,18 @@ export class ProductsService {
   addProduct(product: ProductModel) {
     product.id = Date.now();
     this.products = [...this.products, product];
+    this.refreshProducts.next([...this.products]);
   }
 
   // Called from ProductFormComponent
   updateProduct(product: ProductModel) {
     this.products = this.products.map(p => p.id === product.id ? product : p);
+    this.refreshProducts.next([...this.products]);
   }
 
   // Called from ProductDetailComponent
   deleteProduct(id: number) {
     this.products = this.products.filter(p => p.id !== id);
+    this.refreshProducts.next([...this.products]);
   }
 }

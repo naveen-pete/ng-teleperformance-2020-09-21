@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, Input } from '@angular/core';
 
 import { ProductModel } from '../product.model';
+import { ProductsService } from '../products.service';
+import { LoggerService } from '../../common/logger.service';
 
 @Component({
   selector: 'app-product-form',
@@ -13,11 +15,12 @@ export class ProductFormComponent implements OnInit, OnChanges {
 
   @Input() product: ProductModel;
 
-  @Output() createProduct = new EventEmitter<ProductModel>();
-  @Output() updateProduct = new EventEmitter<ProductModel>();
   @Output() cancelEditProduct = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private service: ProductsService,
+    private logger: LoggerService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.product.currentValue) {
@@ -31,6 +34,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
   ngOnInit(): void { }
 
   onSubmit() {
+    this.logger.log('Saving product information.');
+
     const price = +this.product.price;
     const product: ProductModel = {
       ...this.product,
@@ -39,9 +44,9 @@ export class ProductFormComponent implements OnInit, OnChanges {
     }
 
     if (this.createNew) {
-      this.createProduct.emit(product);
+      this.service.addProduct(product);
     } else {
-      this.updateProduct.emit(product);
+      this.service.updateProduct(product);
     }
     this.product = new ProductModel();
 
