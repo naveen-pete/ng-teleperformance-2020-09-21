@@ -150,3 +150,34 @@ Component
   - Behavior - TS - class - method - searchProducts(searchText)
   
   - reusability
+  
+  
+28-Sep-20
+---------
+
+Services
+--------
+
+1. ProductDetailComponent
+  - name, price, image, seller, publisher, rating
+  - code accessing REST url - https://amazon.in/api/products/101
+  
+2. OrdersComponent
+  - name, price, image, seller, publisher, rating
+  - code accessing REST url - https://amazon.in/api/products/201
+  
+3. ShoppingCartComponent
+  - name, price, image, seller, publisher, rating
+  - code accessing REST url - https://amazon.in/api/products/201
+
+- Duplicating code
+- SRP / separation of concerns
+  
+Service
+- Non UI Code
+- Common logic 
+  
+  
+
+
+
