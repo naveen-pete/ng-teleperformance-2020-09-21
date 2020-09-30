@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { ProductModel } from '../product.model';
@@ -14,7 +15,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   products: ProductModel[] = [];
 
-  constructor(private service: ProductsService) { }
+  constructor(
+    private service: ProductsService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.subRefreshProducts = this.service.refreshProducts.subscribe((products: ProductModel[]) => {
@@ -22,6 +26,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     })
 
     this.products = this.service.getAllProducts();
+  }
+
+  onAdd() {
+    this.router.navigate(['/products/new']);
   }
 
   ngOnDestroy() {

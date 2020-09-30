@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductModel } from '../product.model';
 import { ProductsService } from '../products.service';
@@ -9,29 +10,30 @@ import { LoggerService } from '../../common/logger.service';
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
-export class ProductFormComponent implements OnInit, OnChanges {
+export class ProductFormComponent implements OnInit {
+  id: number;
   showMessage: boolean = false;
-  createNew: boolean;
+  createNew: boolean = true;
 
-  @Input() product: ProductModel;
-
-  @Output() cancelEditProduct = new EventEmitter();
+  product: ProductModel = new ProductModel();
 
   constructor(
     private service: ProductsService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.product.currentValue) {
-      this.createNew = false;
-    } else {
-      this.product = new ProductModel();
-      this.createNew = true;
-    }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((map) => {
+      const productId = +map.get('id');
+      if (productId) {
+        this.id = productId;
+        this.product = this.service.getProduct(this.id);
+        this.createNew = false;
+      }
+    });
   }
-
-  ngOnInit(): void { }
 
   onSubmit() {
     this.logger.log('Saving product information.');
@@ -45,19 +47,21 @@ export class ProductFormComponent implements OnInit, OnChanges {
 
     if (this.createNew) {
       this.service.addProduct(product);
+      this.router.navigate(['/products']);
     } else {
       this.service.updateProduct(product);
+      this.router.navigate(['/products', this.id]);
     }
     this.product = new ProductModel();
 
-    this.showMessage = true;
-    setTimeout(() => {
-      this.showMessage = false;
-    }, 5000);
+    // this.showMessage = true;
+    // setTimeout(() => {
+    //   this.showMessage = false;
+    // }, 5000);
   }
 
   onCancel() {
-    this.cancelEditProduct.emit();
+    this.router.navigate(['/products', this.id]);
   }
 
 }

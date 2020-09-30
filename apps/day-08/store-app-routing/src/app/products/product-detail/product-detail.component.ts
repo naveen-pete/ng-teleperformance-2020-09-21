@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductModel } from '../product.model';
 import { ProductsService } from '../products.service';
@@ -10,14 +10,14 @@ import { ProductsService } from '../products.service';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
+  disableDelete = false;
   id: number;
   product: ProductModel = new ProductModel();
 
-  @Output() editProduct = new EventEmitter<number>();
-
   constructor(
     private service: ProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -30,10 +30,12 @@ export class ProductDetailComponent implements OnInit {
   onDelete() {
     if (window.confirm('Are you sure?')) {
       this.service.deleteProduct(this.product.id);
+      this.router.navigate(['/products']);
     }
   }
 
   onEdit() {
-    this.editProduct.emit(this.product.id);
+    // http://localhost:4200/products/1/edit
+    this.router.navigate(['/products', this.id, 'edit'])
   }
 }

@@ -14,7 +14,7 @@
     <button type="button" class="btn btn-outline-primary btn-sm mr-2" (click)="onEdit()">
       Edit
     </button>
-    <button type="button" class="btn btn-outline-danger btn-sm" (click)="onDelete()">
+    <button [disabled]="disableDelete" type="button" class="btn btn-outline-danger btn-sm" (click)="onDelete()">
       Delete
     </button>
   </div>
