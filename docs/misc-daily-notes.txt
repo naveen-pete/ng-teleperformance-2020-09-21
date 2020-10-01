@@ -176,7 +176,17 @@ Services
 Service
 - Non UI Code
 - Common logic 
-  
+
+--------------------------
+30-Sep-20
+
+Async code in JS
+1. Callback function - ES5
+2. Promise - ES6
+3. Async / Await - ES7
+
+4. Observable - rxjs
+
   
 
 
