@@ -20,6 +20,27 @@
       "description": "XPS For the ultimate experience Laptops with exceptional build quality, powerful features with manageability and security options",
       "price": 98990,
       "isAvailable": true
+    },
+    {
+      "name": "p1",
+      "description": "p1 desc",
+      "price": 10,
+      "isAvailable": true,
+      "id": 4
+    },
+    {
+      "name": "p2",
+      "description": "p2 desc",
+      "price": 20,
+      "isAvailable": false,
+      "id": 5
+    },
+    {
+      "name": "p3",
+      "description": "p3 desc",
+      "price": 30,
+      "isAvailable": false,
+      "id": 6
     }
   ]
 }

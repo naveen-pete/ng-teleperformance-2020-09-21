@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { ProductModel } from './product.model';
 import { LoggerService } from '../common/logger.service';
@@ -8,38 +10,25 @@ import { LoggerService } from '../common/logger.service';
   providedIn: 'root'
 })
 export class ProductsService {
+  private apiUrl = 'http://localhost:3000/products';
+
   refreshProducts = new Subject<ProductModel[]>();
 
-  private products: ProductModel[] = [
-    {
-      id: 1,
-      name: 'iPhone X',
-      description: 'A mobile phone from Apple',
-      isAvailable: true,
-      price: 60000
-    },
-    {
-      id: 2,
-      name: 'Samsung Galaxy Note 10',
-      description: 'A mobile phone from Samsung',
-      isAvailable: true,
-      price: 80000
-    },
-    {
-      id: 3,
-      name: 'Google Pixel 3',
-      description: 'A mobile phone from Google',
-      isAvailable: false,
-      price: 50000
-    }
-  ];
+  private products: ProductModel[] = [];
 
-  constructor(private logger: LoggerService) { }
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService
+  ) { }
 
   // Called from ProductsComponent
-  getAllProducts(): ProductModel[] {
-    this.logger.log('Get all products invoked.');
-    return [...this.products];
+  getAllProducts(): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.apiUrl).pipe(
+      tap((products) => {
+        console.log('tap() callback invoked', products);
+        this.products = products;
+      })
+    );
   }
 
   // Called from ProductsComponent
@@ -55,10 +44,13 @@ export class ProductsService {
   }
 
   // Called from ProductFormComponent
-  addProduct(product: ProductModel) {
-    product.id = Date.now();
-    this.products = [...this.products, product];
-    this.refreshProducts.next([...this.products]);
+  addProduct(product: ProductModel): Observable<ProductModel> {
+    return this.http.post<ProductModel>(this.apiUrl, product).pipe(
+      tap(product => {
+        this.products = [...this.products, product];
+        this.refreshProducts.next([...this.products]);
+      })
+    );
   }
 
   // Called from ProductFormComponent

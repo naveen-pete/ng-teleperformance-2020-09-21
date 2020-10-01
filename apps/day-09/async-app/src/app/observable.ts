@@ -39,23 +39,23 @@ const getPosts = (userId: number) => {
   });
 };
 
-export const doWork = () => {
-  getUser('hari')
-    .pipe(
-      switchMap((user: any) => {
-        console.log('user:', user);
-        return getPosts(user.id);
-      })
-    )
-    .subscribe(
-      (posts: any) => {
-        console.log('posts for user:', posts);
-      },
-      (error: any) => {
-        console.log('Error:', error);
-      }
-    );
-};
+// export const doWork = () => {
+//   getUser('hari')
+//     .pipe(
+//       switchMap((user: any) => {
+//         console.log('user:', user);
+//         return getPosts(user.id);
+//       })
+//     )
+//     .subscribe(
+//       (posts: any) => {
+//         console.log('posts for user:', posts);
+//       },
+//       (error: any) => {
+//         console.log('Error:', error);
+//       }
+//     );
+// };
 
 // export const doWork = () => {
 //   getUser('hari').subscribe(
@@ -76,24 +76,27 @@ export const doWork = () => {
 //   );
 // };
 
-// export const doWork = () => {
-//   getUser('hari')
-//     .pipe(
-//       map((user: any) => {
-//         const newUser = { ...user, name: user.name.toUpperCase() };
-//         return newUser;
-//       }),
-//       switchMap((user: any) => {
-//         console.log('user:', user);
-//         return getPosts(user.id);
-//       })
-//     )
-//     .subscribe(
-//       (posts: any) => {
-//         console.log('posts for user:', posts);
-//       },
-//       (error: any) => {
-//         console.log('Error:', error);
-//       }
-//     );
-// };
+export const doWork = () => {
+  getUser('hari')
+    .pipe(
+      map((user: any) => {
+        console.log('map() user:', user);
+        const newUser = { ...user, name: user.name.toUpperCase() };
+        return newUser;
+      }),
+      switchMap((user: any) => {
+        console.log('switchMap() user:', user);
+        return getPosts(user.id);
+      }),
+      // operator
+      // operator
+    )
+    .subscribe(
+      (posts: any) => {
+        console.log('posts for user:', posts);
+      },
+      (error: any) => {
+        console.log('Error:', error);
+      }
+    );
+};
