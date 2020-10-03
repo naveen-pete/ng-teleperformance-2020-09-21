@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductModel } from '../product.model';
 import { ProductsService } from '../products.service';
-import { LoggerService } from '../../common/logger.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -18,10 +18,10 @@ export class ProductFormComponent implements OnInit {
   createNew: boolean = true;
 
   product: ProductModel = new ProductModel();
+  @ViewChild('productForm') form: NgForm;
 
   constructor(
     private service: ProductsService,
-    private logger: LoggerService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -53,11 +53,14 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const price = +this.product.price;
+    const { name, description, price, isAvailable } = this.form.value;
+
     const product: ProductModel = {
-      ...this.product,
-      price: isNaN(price) ? 0 : price,
-      isAvailable: this.product.isAvailable || false
+      id: this.id,
+      name: name,
+      description: description,
+      price: isNaN(parseInt(price)) ? 0 : parseInt(price),
+      isAvailable: isAvailable || false
     }
 
     if (this.createNew) {

@@ -1,36 +1,50 @@
 <h4>Product Form</h4>
 <div class="card bg-light">
   <div class="card-body">
-    <form>
+    <form #productForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Name</label>
-        <input class="form-control" type="text" id="name" name="name" placeholder="Enter name"
-          [(ngModel)]="product.name" />
+        <input class="form-control" type="text" id="name" name="name" placeholder="Enter name" [ngModel]="product.name"
+          #name="ngModel" required minlength="3" />
+        <div class="alert alert-warning mt-1" *ngIf="name.touched && !name.valid">
+          <div *ngIf="name.hasError('required')">
+            Name is required.
+          </div>
+          <div *ngIf="name.hasError('minlength')">
+            Name should contain at least 3 characters.
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" rows="3" placeholder="Enter description" id="description" name="description"
-          [(ngModel)]="product.description"></textarea>
+          [ngModel]="product.description" #description="ngModel" required></textarea>
+        <div class="alert alert-warning mt-1" *ngIf="description.touched && !description.valid">
+          Description is required.
+        </div>
       </div>
 
       <div class="form-group">
         <label for="price">Price</label>
         <input class="form-control" type="text" id="price" name="price" placeholder="Enter price"
-          [(ngModel)]="product.price" />
+          [ngModel]="product.price" #price="ngModel" required />
+        <div class="alert alert-warning mt-1" *ngIf="price.touched && !price.valid">
+          Price is required.
+        </div>
       </div>
 
       <div class="form-group form-check">
         <input type="checkbox" id="isAvailable" name="isAvailable" class="form-check-input" value="true"
-          [(ngModel)]="product.isAvailable" />
+          [ngModel]="product.isAvailable" />
         <label for="isAvailable" class="form-check-label">Available?</label>
       </div>
 
       <div *ngIf="createNew">
-        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">Create</button>
+        <button [disabled]="!productForm.valid" type="submit" class="btn btn-sm btn-primary mr-2">Create</button>
       </div>
       <div *ngIf="!createNew">
-        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">Update</button>
+        <button [disabled]="!productForm.valid" type="submit" class="btn btn-sm btn-primary mr-2">Update</button>
         <button type="button" class="btn btn-sm btn-warning" (click)="onCancel()">Cancel</button>
       </div>
     </form>

@@ -17,8 +17,7 @@ export class ProductsService {
   private products: ProductModel[] = [];
 
   constructor(
-    private http: HttpClient,
-    private logger: LoggerService
+    private http: HttpClient
   ) { }
 
   // Called from ProductsComponent

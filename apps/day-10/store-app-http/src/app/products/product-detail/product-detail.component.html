@@ -1,5 +1,5 @@
-<div class="alert alert-danger" *ngIf="!product">
-  Product not found!
+<div class="alert alert-info" *ngIf="!product">
+  Loading product...
 </div>
 <div class="card bg-light mb-2" style="max-width: 30rem;" *ngIf="product">
   <h5 class="card-header">{{ product.name | uppercase }}</h5>
