@@ -24,7 +24,7 @@ describe('ProductsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return products', () => {
+  xit('should return products', () => {
     const testProducts: Product[] = [
       { id: 1, name: 'p1', description: 'p1 desc', price: 10, isAvailable: true },
       { id: 2, name: 'p2', description: 'p2 desc', price: 20, isAvailable: false },
