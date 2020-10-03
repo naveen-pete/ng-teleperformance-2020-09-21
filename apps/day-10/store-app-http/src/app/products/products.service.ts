@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ProductModel } from './product.model';
-import { LoggerService } from '../common/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,12 +30,24 @@ export class ProductsService {
 
   // Called from ProductDetailComponent and ProductFormComponent
   getProduct(id: number): Observable<ProductModel> {
-    return this.http.get<ProductModel>(`${this.apiUrl}/${id}`);
+    const authToken = 'abc123';
+
+    // http://localhost:3000/products?auth-token=abc123
+
+    // return this.http.get<ProductModel>(this.apiUrl + '/' + id);
+    return this.http.get<ProductModel>(`${this.apiUrl}/${id}`, {
+      params: new HttpParams().set('auth-token', authToken)
+    });
   }
 
   // Called from ProductFormComponent
   addProduct(product: ProductModel): Observable<ProductModel> {
-    return this.http.post<ProductModel>(this.apiUrl, product).pipe(
+    // retrieve the token from localstorage - localStorage.getItem('authToken');
+    // const authToken = localStorage.getItem('authToken');
+    const authToken = 'abc123';
+    return this.http.post<ProductModel>(this.apiUrl, product, {
+      headers: new HttpHeaders().set('my-auth-token', authToken)
+    }).pipe(
       tap(product => {
         this.products = [...this.products, product];
         this.refreshProducts.next([...this.products]);

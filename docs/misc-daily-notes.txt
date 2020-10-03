@@ -187,6 +187,15 @@ Async code in JS
 
 4. Observable - rxjs
 
+--------------------------
+03-Oct-20
+
+Form Validations
+
+1. Template Driven Forms - FormsModule - built-in validations
+2. Reactive Forms - ReactiveFormsModule - custom validations - sync & async  
+
+
   
 
 
